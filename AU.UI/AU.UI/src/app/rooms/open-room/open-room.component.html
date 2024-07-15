@@ -1,0 +1,136 @@
+<div *ngIf="room">
+    <table class="table align-middle vertical-align-center">
+        <tbody>
+            <tr>
+
+            <tr>
+                <td>
+                    <label for="roomName" class="form-label">
+                        Название
+                    </label>
+                </td>
+                <td>
+                    {{ room.roomName }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="buildName" class="form-label">
+                        Корпус
+                    </label>
+                </td>
+                <td>
+                    <div class="accordion accordion-flush" id="accordionBuild" *ngFor="let type of BuildList$ | async">
+                        <div class="accordion-item" *ngIf="room.buildId == type.buildId">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#flush-collapseTwo" aria-expanded="false"
+                                aria-controls="flush-collapseTwo">
+                                {{ type.buildName }}
+                            </button>
+                            <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                data-bs-parent="#accordionBuild">
+                                <div class="accordion-body">
+                                    <table class="table align-middle vertical-align-center">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <label for="address" class="form-label">
+                                                        Адрес:
+                                                    </label>
+                                                </td>
+                                                <td>
+                                                    <div *ngFor="let type of BuildList$ | async">
+                                                        <div *ngIf="room.buildId === type.buildId">
+                                                <td>{{ type.address }}</td>
+                                </div>
+                            </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="floors" class="form-label">
+                        Кол-во этажей
+                    </label>
+                </td>
+                <td>
+                    <div *ngFor="let type of BuildList$ | async">
+                        <div *ngIf="room.buildId === type.buildId">
+                <td>{{ type.floors }}</td>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+    <td>
+        <label for="other" class="form-label">
+            Доп. информация
+        </label>
+    </td>
+    <td>
+        <div *ngFor="let type of BuildList$ | async">
+            <div *ngIf="room.buildId === type.buildId">
+    <td>{{ type.other }}</td>
+    </div>
+    </div>
+    </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</td>
+</tr>
+
+<tr>
+    <td>
+        <label for="roomTypeId" class="form-label">
+            Тип
+        </label>
+    </td>
+    <td>
+        <div *ngFor="let type of RoomTypeList$ | async">
+            <div *ngIf="room.roomTypeId == type.roomTypeId">
+    <td>{{ type.roomTypeName }}</td>
+    </div>
+    </div>
+    </td>
+</tr>
+
+<tr>
+    <td>
+        <label for="roomName" class="form-label">
+            Вместимость
+        </label>
+    </td>
+    <td>
+        {{ room.capacity }} человек
+    </td>
+</tr>
+
+<tr>
+    <td>
+        <label for="roomName" class="form-label">
+            Этаж
+        </label>
+    </td>
+    <td>
+        {{ room.floor }}-й
+    </td>
+</tr>
+
+<tr>
+    <td>
+        <label for="roomName" class="form-label">
+            Номер
+        </label>
+    </td>
+    <td>
+        {{ room.roomNumber }}
+    </td>
+</tr>
+</tbody>
+</table>
+</div>

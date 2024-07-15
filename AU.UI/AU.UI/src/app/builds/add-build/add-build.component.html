@@ -1,0 +1,94 @@
+<div class="container-fluid">
+  <div class="p-3 mb-2 bg-secondary-subtle text-emphasis-secondary">
+
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page" routerLink="">ГЛАВНАЯ</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" routerLink="/builds">КОРПУСА</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/rooms">ПОМЕЩЕНИЯ</a>
+      </li>
+      <router-outlet></router-outlet>
+    </ul>
+
+    <nav
+      style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"
+      aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a routerLink="/builds">Корпуса</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          Добавить корпус
+        </li>
+      </ol>
+      <router-outlet></router-outlet>
+    </nav>
+
+    <form class="was-validated" onsubmit="setTimeout(function () { window.location.reload(); }, 10)">
+      <table>
+        <tbody>
+
+          <tr>
+            <td>
+              <label for="buildName" class="form-label">
+                Наименование корпуса
+              </label>
+            </td>
+            <td>
+              <input type="text" class="form-control mb-2 ms-5" id="buildName" name="buildName" maxlength="35"
+                [(ngModel)]="buildName" placeholder="Учебный корпус №" required />
+            </td>
+          </tr>
+
+
+          <tr>
+            <td>
+              <label for="address" class="form-label">
+                Адрес
+              </label>
+            </td>
+            <td>
+              <input type="text" class="form-control mb-2 ms-5" id="address" name="address" maxlength="35"
+                [(ngModel)]="address" placeholder="ул. Пушкина 55" required />
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <label for="floors" class="form-label">
+                Количество этажей
+              </label>
+            </td>
+            <td>
+              <input type="text" onKeyup="checkform()" class="form-control mb-2 ms-5" id="floors" name="floors"
+                maxlength="35" [(ngModel)]="floors" placeholder="Кол-во этажей (цифра)" required />
+            </td>
+          </tr>
+
+          <tr>
+            <td width="30%">
+              <label for="other" class="form-label">
+                Доп. информация
+              </label>
+            </td>
+            <td>
+              <textarea type="text" class="form-control mb-2 ms-5" id="other" name="other" rows="5" cols="30"
+                maxlength="1024" [(ngModel)]="other"
+                placeholder="Дополнительные информация (наличие парковки, лифта и т.п.)">
+          </textarea>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <hr>
+
+      <button (click)="addBuild()" class="btn btn-primary" type="submit">Создать</button>
+    </form>
+  </div>
+</div>

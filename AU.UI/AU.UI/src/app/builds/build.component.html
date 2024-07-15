@@ -1,0 +1,76 @@
+<div class="container-fluid">
+  <div class="p-3 mb-2 bg-secondary-subtle text-emphasis-secondary">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page" routerLink="">ГЛАВНАЯ</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" routerLink="/builds">КОРПУСА</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/rooms">ПОМЕЩЕНИЯ</a>
+      </li>
+      <router-outlet></router-outlet>
+    </ul>
+    <div class="d-grid gap-2 d-md-block">
+      <button type="button" class="btn btn-success float-none m-3" routerLink="/addbuild">
+        ДОБАВИТЬ КОРПУС +
+      </button>
+      <router-outlet></router-outlet>
+    </div>
+    <hr>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            <input class="form-control" type="text" placeholder="Искать..." [(ngModel)]="searchText">
+          </th>
+        </tr>
+      </thead>
+    </table>
+    <td>
+      <table class="table align-middle vertical-align-center">
+        <thead>
+          <tr class="table align-middle vertical-align-center">
+            <th scope="col">
+              <h6><b>Название</b></h6>
+            </th>
+            <th scope="col">
+              <h6><b>Адрес</b></h6>
+            </th>
+            <th>
+              <h6><b>Кол-во этажей</b></h6>
+            </th>
+            <th>
+              <h6><b>Доп. инф.</b></h6>
+            </th>
+            <th>
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let build of builds | search: searchText">
+          <tr class="table align-middle vertical-align-center">
+            <td>
+              {{ build.buildName }}
+            </td>
+            <td>
+              {{ build.address }}
+            </td>
+            <td>
+              {{ build.floors }}
+            </td>
+            <td>
+              {{ build.other }}
+            </td>
+            <td>
+              <button type="button" class="btn btn-secondary" (click)="editBuild(build)">ИЗМЕНИТЬ</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </td>
+
+    <app-change-build [build]="buildToEdit" (vacanciesUpdated)="changeBuildList($any($event))"></app-change-build>
+
+  </div>
+</div>

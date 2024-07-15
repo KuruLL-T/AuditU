@@ -1,0 +1,52 @@
+<div *ngIf="build">
+    <table class="table align-middle vertical-align-center">
+        <tbody>
+            <tr>
+
+            <tr>
+                <td>
+                    <label for="buildName" class="form-label">
+                        Название
+                    </label>
+                </td>
+                <td>
+                    {{ build.buildName }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="address" class="form-label">
+                        Адрес
+                    </label>
+                </td>
+                <td>
+                    {{ build.address }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="floors" class="form-label">
+                        Кол-во этажей
+                    </label>
+                </td>
+                <td>
+                    {{ build.floors }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="other" class="form-label">
+                        Доп. инф.
+                    </label>
+                </td>
+                <td>
+                    {{ build.other }}
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>

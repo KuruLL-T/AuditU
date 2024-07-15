@@ -1,0 +1,281 @@
+<div class="container-fluid">
+    <div class="p-3 mb-2 bg-secondary-subtle text-emphasis-secondary">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" routerLink="">ГЛАВНАЯ</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/builds">КОРПУСА</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" routerLink="/rooms">ПОМЕЩЕНИЯ</a>
+            </li>
+            <router-outlet></router-outlet>
+        </ul>
+        <div class="d-grid gap-2 d-md-block">
+            <button type="button" class="btn btn-success float-none m-3" routerLink="/addroom">
+                ДОБАВИТЬ ПОМЕЩЕНИЕ +
+            </button>
+            <router-outlet></router-outlet>
+        </div>
+
+        <hr>
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        <h2>
+                            Фильтр
+                        </h2>
+                    </th>
+                    <th>
+                        <input class="form-control ms-5" type="text" placeholder="Искать..." [(ngModel)]="searchText">
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <div class="container-md ms-1">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <label for="build" class="form-label">Корпус</label>
+                                        </td>
+                                        <td>
+                                            <select class="form-select mb-2 ms-3" name="buildId" id="buildId"
+                                                [(ngModel)]="buildId">
+                                                <option *ngFor="let build of builds" [value]="build.buildId">
+                                                    {{ build.buildName }}
+                                                </option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="roomType" class="form-label">Тип</label>
+                                        </td>
+                                        <td>
+                                            <select class="form-select mb-2 ms-3" name="roomTypeId" id="roomTypeId"
+                                                [(ngModel)]="roomTypeId">
+                                                <option *ngFor="let roomType of roomTypes"
+                                                    [value]="roomType.roomTypeId">
+                                                    {{ roomType.roomTypeName }}
+                                                </option>
+                                            </select>
+                                        </td>
+                                    <tr>
+                                        <td>
+                                            <label for="capacity" class="form-label">Вместимость, чел.</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control mb-2 ms-3" id="capacity"
+                                                name="capacity" [(ngModel)]="capacity" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label for="floor" class="form-label">Этаж</label>
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control mb-2 ms-3" id="floor" name="floor"
+                                                [(ngModel)]="floor" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row g-3">
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-primary mb-3"
+                                        (click)="filterRoom()">ПРИМЕНИТЬ</button>
+                                </div>
+                                <div class="col-auto">
+                                    <button type="button" class="btn btn-secondary mb-3"
+                                        (click)="clfilterRoom()">ОЧИСТИТЬ</button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="container-lg ms-1" *ngIf="filterfalse">
+                            <table class="table align-middle vertical-align-center">
+                                <thead>
+                                    <tr class="table align-middle vertical-align-center">
+                                        <th scope="col">
+                                            <h6><b>Название</b></h6>
+                                        </th>
+                                        <th scope="col">
+                                            <h6><b>Корпус</b></h6>
+                                        </th>
+                                        <th scope="col">
+                                            <h6><b>Номер</b></h6>
+                                        </th>
+                                        <th scope="col">
+                                            <h6><b>Тип</b></h6>
+                                        </th>
+                                        <th scope="col">
+                                            <h6><b>Этаж</b></h6>
+                                        </th>
+                                        <th scope="col">
+                                            <h6><b>Вместимость</b></h6>
+                                        <th scope="col">
+                                            <h6><b></b></h6>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let room of Array| search: searchText">
+                                    <tr>
+
+                                        <td>
+                                            {{ room.roomName }}
+                                        </td>
+
+                                        <td>
+                                            <div *ngFor="let build of builds">
+                                                <div *ngIf="room.buildId == build.buildId">
+                                                    <td data-bs-toggle="modal" data-bs-target="#openBuildModal"
+                                                        (click)="openBuild(build)">
+                                                        <span role="button" tabindex="0">{{ build.buildName }}</span>
+                                                    </td>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            {{ room.roomNumber }}
+                                        </td>
+
+                                        <td>
+                                            <div *ngFor="let roomType of roomTypes">
+                                                <div *ngIf="room.roomTypeId == roomType.roomTypeId">
+                                                    <td>
+                                                        {{ roomType.roomTypeName }}
+                                                    </td>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            {{ room.floor }}
+                                        </td>
+
+                                        <td>
+                                            {{ room.capacity }} человек
+                                        </td>
+
+
+                                        <td>
+                                            <button type="button" class="btn btn-secondary" (click)="editRoom(room)">Изменить
+                                                помещение</button>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="container-lg ms-1" *ngIf="filtertrue">
+                            <table class="table align-middle vertical-align-center">
+                                <thead>
+                                    <tr class="table align-middle vertical-align-center">
+                                        <th scope="col">
+                                            <h6><b>Название</b></h6>
+                                        </th>
+                                        <th scope="col">
+                                            <h6><b>Корпус</b></h6>
+                                        </th>
+                                        <th scope="col">
+                                            <h6><b>Номер</b></h6>
+                                        </th>
+                                        <th scope="col">
+                                            <h6><b>Тип</b></h6>
+                                        </th>
+                                        <th scope="col">
+                                            <h6><b>Этаж</b></h6>
+                                        </th>
+                                        <th scope="col">
+                                            <h6><b>Вместимость</b></h6>
+                                        <th scope="col">
+                                            <h6><b></b></h6>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let room of rooms | search: searchText">
+                                    <tr>
+
+                                        <td>
+                                            {{ room.roomName }}
+                                        </td>
+
+                                        <td>
+                                            <div *ngFor="let build of builds">
+                                                <div *ngIf="room.buildId == build.buildId">
+                                                    <td data-bs-toggle="modal" data-bs-target="#openBuildModal"
+                                                        (click)="openBuild(build)">
+                                                        <span role="button" tabindex="0">{{ build.buildName }}</span>
+                                                    </td>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            {{ room.roomNumber }}
+                                        </td>
+
+                                        <td>
+                                            <div *ngFor="let roomType of roomTypes">
+                                                <div *ngIf="room.roomTypeId == roomType.roomTypeId">
+                                                    <td>
+                                                        {{ roomType.roomTypeName }}
+                                                    </td>
+                                                </div>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            {{ room.floor }}-й
+                                        </td>
+
+                                        <td>
+                                            {{ room.capacity }} человек
+                                        </td>
+
+
+                                        <td>
+                                            <button type="button" class="btn btn-secondary" (click)="editRoom(room)">Изменить
+                                                помещение</button>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <app-change-room [room]="roomToEdit" (vacanciesUpdated)="updateRoomList($any($event))"></app-change-room>
+
+        <div class="modal fade" id="openBuildModal" tabindex="-1" aria-labelledby="openBuildModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="openBuildModalLabel">Корпус</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <app-open-build [build]="buildToOpen"></app-open-build>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
